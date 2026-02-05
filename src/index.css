@@ -1,11 +1,12 @@
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'Orbitron', 'Segoe UI', system-ui, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  color-scheme: dark;
+  color: rgba(255, 255, 255, 0.95);
+  background: linear-gradient(135deg, #0a0a1a 0%, #1a0a2e 50%, #0a1a2e 100%);
+  background-attachment: fixed;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -15,11 +16,13 @@
 
 a {
   font-weight: 500;
-  color: #646cff;
+  color: #ffd700;
   text-decoration: inherit;
+  text-shadow: 0 0 10px #ffd700;
 }
 a:hover {
-  color: #535bf2;
+  color: #ff00ff;
+  text-shadow: 0 0 20px #ff00ff;
 }
 
 body {
@@ -37,17 +40,20 @@ h1 {
 
 button {
   border-radius: 8px;
-  border: 1px solid transparent;
+  border: 1px solid #ffd700;
   padding: 0.6em 1.2em;
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
+  background-color: rgba(255, 215, 0, 0.1);
   cursor: pointer;
-  transition: border-color 0.25s;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
 }
 button:hover {
-  border-color: #646cff;
+  border-color: #ff00ff;
+  box-shadow: 0 0 20px rgba(255, 0, 255, 0.5);
+  background-color: rgba(255, 0, 255, 0.1);
 }
 button:focus,
 button:focus-visible {
