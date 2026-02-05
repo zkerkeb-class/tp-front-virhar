@@ -1,9 +1,9 @@
 import { Link } from "react-router";
-
 import './index.css';
 import PokeTitle from "./pokeTitle";
 import PokeImage from "./pokeImage";
 
+// Couleurs associées à chaque type de pokémon
 const typeColors = {
     normal: '#A8A878', fire: '#F08030', water: '#6890F0', grass: '#78C850',
     electric: '#F8D030', ice: '#98D8D8', fighting: '#C03028', poison: '#A040A0',
@@ -20,30 +20,30 @@ const PokeCard = ({ pokemon }) => {
 
     return (
         <Link to={`/pokemonDetails/${pokemon.id}`}>
-        <div className="poke-card" style={{ backgroundColor }}>
-            <div className="poke-card-top">
-                <div className={`poke-card-header poke-type-${mainType?.toLowerCase()}`}>
-                    <PokeTitle name={pokemon.name?.french || pokemon.name?.english} />
-                </div>
-                <div className="poke-hp-container">
-                    <span className="poke-hp">PV {hp}</span>
-                    <img src={typeImageUrl} alt={mainType} className="poke-type-icon" />
-                </div>
-            </div>
-            <div className="poke-image-background">
-                <PokeImage imageUrl={pokemon.image} />
-            </div>
-            <div>
-                {pokemon.base && Object.entries(pokemon.base).map(([statName, statValue]) => (
-                    <div className="poke-stat-row" key={statName}>
-                        <span className={`poke-type-font poke-type-${statName.toLowerCase()}`}>{statName}</span>
-                        <span className="poke-type-font poke-stat-value">{statValue}</span>
+            <div className="poke-card" style={{ backgroundColor }}>
+                <div className="poke-card-top">
+                    <div className={`poke-card-header poke-type-${mainType?.toLowerCase()}`}>
+                        <PokeTitle name={pokemon.name?.french || pokemon.name?.english} />
                     </div>
-                ))}
+                    <div className="poke-hp-container">
+                        <span className="poke-hp">HP {hp}</span>
+                        <img src={typeImageUrl} alt={mainType} className="poke-type-icon" />
+                    </div>
+                </div>
+                <div className="poke-image-background">
+                    <PokeImage imageUrl={pokemon.image} />
+                </div>
+                <div>
+                    {pokemon.base && Object.entries(pokemon.base).map(([statName, statValue]) => (
+                        <div className="poke-stat-row" key={statName}>
+                            <span className={`poke-type-font poke-type-${statName.toLowerCase()}`}>{statName}</span>
+                            <span className="poke-type-font poke-stat-value">{statValue}</span>
+                        </div>
+                    ))}
+                </div>
             </div>
-        </div>
         </Link>
     );
-}
+};
 
 export default PokeCard;
