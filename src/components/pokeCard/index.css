@@ -1,5 +1,4 @@
 .poke-card {
-    width: 100%;
     width: 250px;
     min-height: 380px;
     border-radius: 16px;
@@ -9,9 +8,9 @@
     flex-direction: column;
     overflow: hidden;
     font-family: 'Segoe UI', sans-serif;
-    background: linear-gradient(160deg, #667eea 0%, #764ba2 100%);
     cursor: pointer;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border: 2px solid yellow;
 }
 
 .poke-card:hover {
@@ -31,11 +30,36 @@
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    padding: 12px 16px;
-    padding-right: 40px;
-    width: fit-content;
-    clip-path: polygon(0 0, calc(100% - 30px) 0, 100% 100%, 0 100%);
+    padding: 8px 12px;
+    padding-right: 30px;
+    clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 100%, 0 100%);
     background-color: #6A3B7A;
+}
+
+.poke-card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.poke-hp-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+.poke-hp {
+    font-size: 1rem;
+    font-weight: bold;
+    color: white;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.7);
+}
+
+.poke-type-icon {
+    width: 100px;
+    height: 20px;
+
 }
 
 .poke-image {

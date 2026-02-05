@@ -2,7 +2,6 @@
     width: 100%;
     max-width: 100%;
     margin: 0 auto;
-    padding: 40px 10px;
     min-height: 100vh;
     box-sizing: border-box;
 }
@@ -24,10 +23,9 @@
     gap: 16px;
     list-style-type: none;
     padding: 0;
-    margin: 0;
     justify-content: center;
-    width: calc(5 * 250px + 4 * 8px);
-    min-width: calc(5 * 250px + 4 * 8px);
+    width: 1500px;
+    min-width: 1500px;
     margin-left: auto;
     margin-right: auto;
 }
@@ -66,12 +64,33 @@
     color: #fff;
 }
 
-/* Animation d'entrée */
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
+.add-pokemon-form {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 20px;
+    padding: 15px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 10px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
-.poke-list > * {
-    animation: fadeIn 0.5s ease-out forwards;
+.add-pokemon-form input, .add-pokemon-form select {
+    padding: 8px;
+    border: none;
+    border-radius: 5px;
+}
+
+.add-pokemon-form input[type="number"] { width: 60px; }
+
+.add-pokemon-form button {
+    padding: 8px 15px;
+    background: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
 }
