@@ -1,42 +1,29 @@
-import { useEffect, useState } from "react";
 import { Link } from "react-router";
-import usePokemon from "../../hook/usePokemon";
 
 import './index.css';
 import PokeTitle from "./pokeTitle";
 import PokeImage from "./pokeImage";
 
 const PokeCard = ({ pokemon }) => {
-    const {pokemonData, loading} = usePokemon(pokemon.url);
-    console.log('pokeData',pokemonData)
-
-
-    if (loading) {
-        return <p>Chargement du Pokémon...</p>;
-    }
-
+    // Les données viennent directement du backend local
+    // Structure: { id, name: { french, english, ... }, type: [...], base: {...}, image }
 
     return (
-        <Link to={`/pokemonDetails/${encodeURIComponent(pokemon.url)}`}>
+        <Link to={`/pokemonDetails/${pokemon.id}`}>
         <div className="poke-card">
-            <div className={`poke-card-header poke-type-${pokemonData.types?.[0]?.type?.name}`}>
-                <PokeTitle name={pokemon.name} />
+            <div className={`poke-card-header poke-type-${pokemon.type?.[0]?.toLowerCase()}`}>
+                <PokeTitle name={pokemon.name?.french || pokemon.name?.english} />
             </div>
             <div className="poke-image-background">
-                <PokeImage imageUrl={pokemonData.sprites?.other?.['official-artwork']?.front_default} />
+                <PokeImage imageUrl={pokemon.image} />
             </div>
             <div>
-
-                {pokemonData.stats?.map((stat) => {
-                    return(
-                        <div className="poke-stat-row" key={stat.stat.name}>
-                            <span className={`poke-type-font poke-type-${stat.stat.name}`}>{stat.stat.name}</span>
-
-                            <span className="poke-type-font poke-stat-value">{stat.base_stat}</span>
-                        </div>
-                    ) 
-                })}    
-
+                {pokemon.base && Object.entries(pokemon.base).map(([statName, statValue]) => (
+                    <div className="poke-stat-row" key={statName}>
+                        <span className={`poke-type-font poke-type-${statName.toLowerCase()}`}>{statName}</span>
+                        <span className="poke-type-font poke-stat-value">{statValue}</span>
+                    </div>
+                ))}
             </div>
         </div>
         </Link>

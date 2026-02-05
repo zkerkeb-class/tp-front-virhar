@@ -1,50 +1,84 @@
-.poke-card{
-    /* background-color: red; */
-    /* background-color: #7B4B94; */
-    border-radius: 4px;
-    display:flex;
+.poke-card {
+    width: 100%;
+    width: 250px;
+    min-height: 380px;
+    border-radius: 16px;
+    position: relative;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+    display: flex;
     flex-direction: column;
-    width: 200px;
-    min-height: 250px;
+    overflow: hidden;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(160deg, #667eea 0%, #764ba2 100%);
     cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.poke-title{
+.poke-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+}
+
+.poke-title {
     color: white;
     text-transform: capitalize;
-    font-size: 12px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.5);
 }
 
-.poke-card-header{
+.poke-card-header {
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    padding: 8px;
+    padding: 12px 16px;
     padding-right: 40px;
     width: fit-content;
     clip-path: polygon(0 0, calc(100% - 30px) 0, 100% 100%, 0 100%);
     background-color: #6A3B7A;
 }
 
-
-.poke-image{
-    width: 100px;
-    height: 100px;
+.poke-image {
+    width: 250px;
+    height: 140px;
+    object-fit: contain;
+    transition: transform 0.3s ease;
 }
 
-.poke-image-background{
-    background-color: blanchedalmond;
-    margin:8px;
+.poke-card:hover .poke-image {
+    transform: scale(1.1);
 }
 
-.poke-type-font{
-    font-size: 10px;
+.poke-image-background {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(5px);
+    margin: 12px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
 }
 
-.poke-stat-row{
+.poke-type-font {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.poke-stat-row {
     display: flex;
     justify-content: space-between;
-    padding: 0px 8px;
+    padding: 4px 12px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.poke-stat-row:last-child {
+    border-bottom: none;
+}
+
+.poke-stat-value {
+    font-weight: 600;
+    color: #fff;
 }
 
 /* Couleurs par type de Pokémon */
