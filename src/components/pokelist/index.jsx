@@ -11,6 +11,7 @@ const PokeList = () => {
     const [page, setPage] = useState(1)
     const [pagination, setPagination] = useState(null)
     const [showAddForm, setShowAddForm] = useState(false)
+    const [searchTerm, setSearchTerm] = useState('')
     const [form, setForm] = useState({ 
         name: '', type: 'Normal', HP: 50, Attack: 50, Defense: 50, 
         SpecialAttack: 50, SpecialDefense: 50, Speed: 50, image: '' 
@@ -30,6 +31,29 @@ const PokeList = () => {
                 console.error("Erreur:", err)
                 setLoading(false)
             })
+    }
+
+    // Recherche d'un pokémon par nom
+    const handleSearch = async () => {
+        if (!searchTerm.trim()) {
+            fetchPokemons();
+            return;
+        }
+        setLoading(true);
+        try {
+            const res = await fetch(`${API_URL}/pokemons/name/${searchTerm}`);
+            if (res.ok) {
+                const data = await res.json();
+                setPokemons([data]);
+                setPagination(null);
+            } else {
+                alert('Pokémon non trouvé');
+            }
+        } catch (error) {
+            console.error("Erreur de recherche:", error);
+        } finally {
+            setLoading(false);
+        }
     }
 
     useEffect(() => { fetchPokemons() }, [page])
@@ -68,6 +92,18 @@ const PokeList = () => {
         <div className="poke-list-container">
             <h2>POKEDEX OF FUTURE</h2>
             
+            <div className="search-container">
+                <input 
+                    type="text" 
+                    placeholder="Chercher un Pokémon..." 
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="search-input"
+                />
+                <button onClick={handleSearch} className="search-button">Rechercher</button>
+                <button onClick={() => { setSearchTerm(''); fetchPokemons(); }} className="search-button">Reset</button>
+            </div>
+
             <div className="pagination">
                 <button onClick={() => setPage(page - 1)} disabled={!pagination?.hasPrevPage}>Previous</button>
                 <span>Page {pagination?.currentPage} / {pagination?.totalPages}</span>
