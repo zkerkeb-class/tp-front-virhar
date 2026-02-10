@@ -1,5 +1,16 @@
 # Lien du rendu
-https://youtu.be/Qf_hewe3tXU
+https://youtu.be/g-CfdLeGKiY
+
+# Fonctionnalité ajoutée
+Une map avec la localisation de chaque pokemon
+Ligne jaune qui descend en fond (style TRON)
+modification des stats avec curseur
+message lors d'intéraction avec un pokemon (update, delete, add)
+possibilité d'importer une photo via multer et via un lien (http:// ou C:\)
+
+
+
+
 
 # React + Vite
 
