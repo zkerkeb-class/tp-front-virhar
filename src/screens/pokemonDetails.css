@@ -13,7 +13,7 @@
     padding: 30px;
     max-width: 500px;
     width: 100%;
-    box-shadow: 0 0 30px rgba(255, 215, 0, 0.3), 0 0 60px rgba(255, 215, 0, 0.1), 0 10px 40px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.15), 0 10px 40px rgba(0, 0, 0, 0.5);
     border: 3px solid #ffd700;
     position: relative;
     overflow: hidden;
@@ -50,7 +50,7 @@
     color: #ffd700;
     text-transform: capitalize;
     margin: 0;
-    text-shadow: 0 0 10px #ffd700, 0 0 20px #ffd700;
+    text-shadow: 0 0 6px rgba(255, 215, 0, 0.4);
     font-family: 'Orbitron', sans-serif;
     letter-spacing: 2px;
 }
@@ -59,7 +59,7 @@
     font-size: 1.2rem;
     color: #ff00ff;
     font-weight: bold;
-    text-shadow: 0 0 10px #ff00ff;
+    text-shadow: 0 0 4px rgba(255, 0, 255, 0.4);
 }
 
 .pokemon-image-container {
@@ -71,7 +71,7 @@
     align-items: center;
     margin-bottom: 20px;
     border: 1px solid rgba(255, 215, 0, 0.3);
-    box-shadow: inset 0 0 30px rgba(255, 215, 0, 0.1);
+    box-shadow: inset 0 0 15px rgba(255, 215, 0, 0.05);
     position: relative;
     z-index: 1;
 }
@@ -80,7 +80,7 @@
     max-width: 200px;
     max-height: 200px;
     object-fit: contain;
-    filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.5));
+    filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.3));
     animation: float 3s ease-in-out infinite;
 }
 
@@ -105,7 +105,7 @@
     font-weight: bold;
     text-transform: uppercase;
     font-size: 0.85rem;
-    box-shadow: 0 0 15px currentColor;
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.3);
     letter-spacing: 1px;
 }
 
@@ -140,7 +140,7 @@
     font-size: 1.3rem;
     margin-bottom: 15px;
     text-align: center;
-    text-shadow: 0 0 10px #ffd700;
+    text-shadow: 0 0 4px rgba(255, 215, 0, 0.3);
     text-transform: uppercase;
     letter-spacing: 3px;
 }
@@ -156,7 +156,7 @@
     color: #ffd700;
     font-size: 0.9rem;
     font-weight: 600;
-    text-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
+    text-shadow: none;
 }
 
 .stat-bar-container {
@@ -176,19 +176,19 @@
     box-shadow: 0 0 10px currentColor;
 }
 
-.stat-bar.hp { background: linear-gradient(90deg, #ff5f5f, #ff8080); box-shadow: 0 0 15px #ff5f5f; }
-.stat-bar.attack { background: linear-gradient(90deg, #f08030, #f5ac78); box-shadow: 0 0 15px #f08030; }
-.stat-bar.defense { background: linear-gradient(90deg, #f8d030, #fae078); box-shadow: 0 0 15px #f8d030; }
-.stat-bar.special-attack { background: linear-gradient(90deg, #6890f0, #98b8f8); box-shadow: 0 0 15px #6890f0; }
-.stat-bar.special-defense { background: linear-gradient(90deg, #78c850, #a7db8d); box-shadow: 0 0 15px #78c850; }
-.stat-bar.speed { background: linear-gradient(90deg, #f85888, #fa92b2); box-shadow: 0 0 15px #f85888; }
+.stat-bar.hp { background: linear-gradient(90deg, #ff5f5f, #ff8080); box-shadow: 0 0 5px rgba(255, 95, 95, 0.3); }
+.stat-bar.attack { background: linear-gradient(90deg, #f08030, #f5ac78); box-shadow: 0 0 5px rgba(240, 128, 48, 0.3); }
+.stat-bar.defense { background: linear-gradient(90deg, #f8d030, #fae078); box-shadow: 0 0 5px rgba(248, 208, 48, 0.3); }
+.stat-bar.special-attack { background: linear-gradient(90deg, #6890f0, #98b8f8); box-shadow: 0 0 5px rgba(104, 144, 240, 0.3); }
+.stat-bar.special-defense { background: linear-gradient(90deg, #78c850, #a7db8d); box-shadow: 0 0 5px rgba(120, 200, 80, 0.3); }
+.stat-bar.speed { background: linear-gradient(90deg, #f85888, #fa92b2); box-shadow: 0 0 5px rgba(248, 88, 136, 0.3); }
 
 .stat-value {
     width: 40px;
     color: #fff;
     font-weight: bold;
     text-align: right;
-    text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+    text-shadow: none;
 }
 
 .total-stats {
@@ -203,7 +203,7 @@
     color: #ff00ff;
     font-weight: bold;
     font-size: 1.1rem;
-    text-shadow: 0 0 10px #ff00ff;
+    text-shadow: none;
     text-transform: uppercase;
     letter-spacing: 2px;
 }
@@ -212,7 +212,7 @@
     color: #ffd700;
     font-weight: bold;
     font-size: 1.1rem;
-    text-shadow: 0 0 10px #ffd700;
+    text-shadow: none;
 }
 
 .back-button {
@@ -226,7 +226,7 @@
     border-radius: 25px;
     font-weight: bold;
     transition: all 0.3s ease;
-    box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.2);
     text-transform: uppercase;
     letter-spacing: 2px;
     position: relative;
@@ -235,7 +235,7 @@
 
 .back-button:hover {
     transform: translateY(-3px);
-    box-shadow: 0 0 40px rgba(255, 215, 0, 0.6);
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
     text-shadow: none;
 }
 
@@ -244,7 +244,7 @@
     color: #ffd700;
     font-size: 1.2rem;
     padding: 50px;
-    text-shadow: 0 0 10px #ffd700;
+    text-shadow: none;
 }
 
 /* Styles pour le mode édition */
@@ -256,19 +256,23 @@
 
 .edit-button {
     background: transparent;
-    border: 2px solid #ffd700;
-    font-size: 1.3rem;
+    border: 1.5px solid rgba(255, 215, 0, 0.5);
+    color: #ffd700;
     cursor: pointer;
     padding: 8px;
     border-radius: 50%;
     transition: all 0.3s ease;
-    box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+    box-shadow: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
 }
 
 .edit-button:hover {
-    background: rgba(255, 215, 0, 0.2);
-    box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
-    transform: rotate(15deg);
+    background: rgba(255, 215, 0, 0.12);
+    border-color: #ffd700;
 }
 
 .edit-name-input {
@@ -280,12 +284,12 @@
     padding: 5px 10px;
     width: 200px;
     font-family: 'Orbitron', sans-serif;
-    box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+    box-shadow: 0 0 6px rgba(255, 215, 0, 0.2);
 }
 
 .edit-name-input:focus {
     outline: none;
-    box-shadow: 0 0 25px rgba(255, 215, 0, 0.5);
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
 }
 
 .edit-image-field {
@@ -300,7 +304,7 @@
 .edit-image-field label {
     color: #ffd700;
     font-size: 0.85rem;
-    text-shadow: 0 0 5px #ffd700;
+    text-shadow: none;
 }
 
 .edit-image-field input {
@@ -315,7 +319,7 @@
 .edit-image-field input:focus {
     outline: none;
     border-color: #ff00ff;
-    box-shadow: 0 0 15px rgba(255, 0, 255, 0.5);
+    box-shadow: 0 0 8px rgba(255, 0, 255, 0.3);
 }
 
 .type-select {
@@ -327,13 +331,13 @@
     font-weight: bold;
     font-size: 0.9rem;
     cursor: pointer;
-    box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+    box-shadow: 0 0 6px rgba(255, 215, 0, 0.15);
     transition: all 0.3s ease;
 }
 
 .type-select:hover {
     border-color: #ff00ff;
-    box-shadow: 0 0 20px rgba(255, 0, 255, 0.4);
+    box-shadow: 0 0 8px rgba(255, 0, 255, 0.2);
 }
 
 .type-select option {
@@ -363,7 +367,7 @@
     border-radius: 50%;
     background: #ffd700;
     cursor: pointer;
-    box-shadow: 0 0 15px #ffd700;
+    box-shadow: 0 0 5px rgba(255, 215, 0, 0.4);
 }
 
 .stat-slider::-moz-range-thumb {
@@ -373,7 +377,7 @@
     background: #ffd700;
     cursor: pointer;
     border: none;
-    box-shadow: 0 0 15px #ffd700;
+    box-shadow: 0 0 5px rgba(255, 215, 0, 0.4);
 }
 
 .stat-slider.hp::-webkit-slider-runnable-track { background: linear-gradient(90deg, #ff5f5f, rgba(255,215,0,0.1)); }
@@ -398,31 +402,36 @@
     transition: all 0.3s ease;
     text-transform: uppercase;
     letter-spacing: 2px;
-    box-shadow: 0 0 25px rgba(0, 255, 136, 0.4);
+    box-shadow: 0 0 10px rgba(0, 255, 136, 0.2);
     position: relative;
     z-index: 1;
 }
 
 .save-button:hover {
     transform: translateY(-3px);
-    box-shadow: 0 0 40px rgba(0, 255, 136, 0.6);
+    box-shadow: 0 0 15px rgba(0, 255, 136, 0.3);
 }
 
 /* Bouton de suppression */
 .delete-button {
     background: transparent;
-    border: 2px solid #ff4757;
-    font-size: 1.3rem;
+    border: 1.5px solid rgba(255, 71, 87, 0.5);
+    color: #ff4757;
     cursor: pointer;
     padding: 8px;
     border-radius: 50%;
     transition: all 0.3s ease;
-    box-shadow: 0 0 10px rgba(255, 71, 87, 0.3);
+    box-shadow: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
 }
 
 .delete-button:hover {
-    background: rgba(255, 71, 87, 0.2);
-    box-shadow: 0 0 20px rgba(255, 71, 87, 0.5);
+    background: rgba(255, 71, 87, 0.12);
+    border-color: #ff4757;
     transform: scale(1.1);
 }
 
@@ -454,7 +463,7 @@
     max-width: 400px;
     width: 90%;
     border: 3px solid #ff4757;
-    box-shadow: 0 0 50px rgba(255, 71, 87, 0.4), 0 0 100px rgba(255, 71, 87, 0.2);
+    box-shadow: 0 0 20px rgba(255, 71, 87, 0.2);
     animation: slideUp 0.3s ease;
     text-align: center;
 }
@@ -474,9 +483,13 @@
     color: #ff4757;
     font-size: 1.8rem;
     margin: 0 0 20px 0;
-    text-shadow: 0 0 20px rgba(255, 71, 87, 0.5);
+    text-shadow: none;
     font-family: 'Orbitron', sans-serif;
     letter-spacing: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
 }
 
 .modal-message {
@@ -488,7 +501,7 @@
 
 .modal-message strong {
     color: #ffd700;
-    text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+    text-shadow: none;
 }
 
 .modal-warning {
@@ -496,7 +509,7 @@
     font-size: 0.9rem;
     margin-bottom: 25px;
     font-style: italic;
-    text-shadow: 0 0 5px rgba(255, 71, 87, 0.3);
+    text-shadow: none;
 }
 
 .modal-buttons {
@@ -521,7 +534,7 @@
 
 .modal-cancel-btn:hover {
     background: rgba(255, 215, 0, 0.2);
-    box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+    box-shadow: 0 0 8px rgba(255, 215, 0, 0.2);
     transform: translateY(-2px);
 }
 
@@ -537,11 +550,11 @@
     transition: all 0.3s ease;
     text-transform: uppercase;
     letter-spacing: 1px;
-    box-shadow: 0 0 20px rgba(255, 71, 87, 0.4);
+    box-shadow: 0 0 10px rgba(255, 71, 87, 0.2);
 }
 
 .modal-delete-btn:hover {
     background: linear-gradient(135deg, #ff6b7a, #ff8a96);
-    box-shadow: 0 0 40px rgba(255, 71, 87, 0.6);
+    box-shadow: 0 0 15px rgba(255, 71, 87, 0.3);
     transform: translateY(-2px);
 }

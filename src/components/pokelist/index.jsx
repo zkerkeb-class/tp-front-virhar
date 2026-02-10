@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react"
 import PokeCard from "../pokeCard"
+import PokeCardForm from "../pokeCard/PokeCardForm"
+import Toast from "../toast/Toast"
 import './index.css'
 
 const API_URL = "http://localhost:3000"
-const TYPES = ['Normal', 'Fire', 'Water', 'Grass', 'Electric', 'Ice', 'Fighting', 'Poison', 'Ground', 'Flying', 'Psychic', 'Bug', 'Rock', 'Ghost', 'Dragon', 'Dark', 'Steel', 'Fairy']
 
 const PokeList = () => {
     const [pokemons, setPokemons] = useState([])
@@ -12,10 +13,21 @@ const PokeList = () => {
     const [pagination, setPagination] = useState(null)
     const [showAddForm, setShowAddForm] = useState(false)
     const [searchTerm, setSearchTerm] = useState('')
+    const [toasts, setToasts] = useState([])
     const [form, setForm] = useState({ 
         name: '', type: 'Normal', HP: 50, Attack: 50, Defense: 50, 
-        SpecialAttack: 50, SpecialDefense: 50, Speed: 50, image: '' 
+        SpecialAttack: 50, SpecialDefense: 50, Speed: 50, image: '', localFile: null 
     })
+
+    // Afficher une notification
+    const showToast = (message, type = 'info') => {
+        const id = Date.now()
+        setToasts(prev => [...prev, { id, message, type }])
+    }
+
+    const removeToast = (id) => {
+        setToasts(prev => prev.filter(t => t.id !== id))
+    }
 
     // Récupération des pokémons avec pagination
     const fetchPokemons = () => {
@@ -33,21 +45,30 @@ const PokeList = () => {
             })
     }
 
-    // Recherche d'un pokémon par nom
+    // Recherche d'un pokémon par nom ou par ID
     const handleSearch = async () => {
-        if (!searchTerm.trim()) {
+        const term = searchTerm.trim();
+        if (!term) {
             fetchPokemons();
             return;
         }
         setLoading(true);
         try {
-            const res = await fetch(`${API_URL}/pokemons/name/${searchTerm}`);
+            // Si c'est un nombre, on cherche par ID, sinon par nom
+            const isId = /^\d+$/.test(term);
+            const url = isId
+                ? `${API_URL}/pokemons/${term}`
+                : `${API_URL}/pokemons/name/${term}`;
+
+            const res = await fetch(url);
             if (res.ok) {
                 const data = await res.json();
                 setPokemons([data]);
                 setPagination(null);
             } else {
-                alert('Pokémon non trouvé');
+                showToast('Pokémon non trouvé', 'error');
+                setLoading(false);
+                return;
             }
         } catch (error) {
             console.error("Erreur de recherche:", error);
@@ -60,29 +81,37 @@ const PokeList = () => {
 
     // Création d'un nouveau pokémon
     const handleAddPokemon = async () => {
-        if (!form.name || !form.image) { 
-            alert('Please fill in name and image')
+        if (!form.name || (!form.image && !form.localFile)) { 
+            showToast('Remplis le nom et une image', 'error')
             return 
         }
+
+        // Utiliser FormData pour supporter l'upload de fichier
+        const formData = new FormData();
+        formData.append('name', JSON.stringify({ french: form.name }));
+        formData.append('type', JSON.stringify([form.type]));
+        formData.append('base', JSON.stringify({ 
+            HP: form.HP, Attack: form.Attack, Defense: form.Defense, 
+            SpecialAttack: form.SpecialAttack, SpecialDefense: form.SpecialDefense, Speed: form.Speed 
+        }));
+
+        if (form.localFile) {
+            formData.append('imageFile', form.localFile);
+        } else {
+            formData.append('image', form.image);
+        }
+
         const res = await fetch(`${API_URL}/pokemons`, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                name: { french: form.name },
-                type: [form.type],
-                base: { 
-                    HP: form.HP, Attack: form.Attack, Defense: form.Defense, 
-                    SpecialAttack: form.SpecialAttack, SpecialDefense: form.SpecialDefense, Speed: form.Speed 
-                },
-                image: form.image
-            })
+            body: formData
         })
         if (res.ok) { 
-            alert('Pokemon created!')
+            showToast('Pokémon créé avec succès !', 'success')
             setShowAddForm(false)
+            setForm({ name: '', type: 'Normal', HP: 50, Attack: 50, Defense: 50, SpecialAttack: 50, SpecialDefense: 50, Speed: 50, image: '', localFile: null })
             fetchPokemons()
         } else { 
-            alert('Error') 
+            showToast('Erreur lors de la création', 'error') 
         }
     }
 
@@ -90,17 +119,24 @@ const PokeList = () => {
 
     return (
         <div className="poke-list-container">
+            {/* Notifications */}
+            <div className="toast-container">
+                {toasts.map(t => (
+                    <Toast key={t.id} message={t.message} type={t.type} onClose={() => removeToast(t.id)} />
+                ))}
+            </div>
+
             <h2>POKEDEX OF FUTURE</h2>
             
             <div className="search-container">
                 <input 
                     type="text" 
-                    placeholder="Chercher un Pokémon..." 
+                    placeholder="Pokemon name or ID" 
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                     className="search-input"
                 />
-                <button onClick={handleSearch} className="search-button">Rechercher</button>
+                <button onClick={handleSearch} className="search-button">Search</button>
                 <button onClick={() => { setSearchTerm(''); fetchPokemons(); }} className="search-button">Reset</button>
             </div>
 
@@ -119,46 +155,15 @@ const PokeList = () => {
             </div>
 
             {showAddForm && (
-                <div className="add-pokemon-form">
-                    <div className="form-field">
-                        <label>Name</label>
-                        <input placeholder="Name" value={form.name} onChange={(e) => setForm({...form, name: e.target.value})} />
+                <div className="form-modal-overlay" onClick={() => setShowAddForm(false)}>
+                    <div className="form-modal-content" onClick={(e) => e.stopPropagation()}>
+                        <PokeCardForm
+                            form={form}
+                            setForm={setForm}
+                            onSubmit={handleAddPokemon}
+                            onCancel={() => setShowAddForm(false)}
+                        />
                     </div>
-                    <div className="form-field">
-                        <label>Type</label>
-                        <select value={form.type} onChange={(e) => setForm({...form, type: e.target.value})}>
-                            {TYPES.map(t => <option key={t}>{t}</option>)}
-                        </select>
-                    </div>
-                    <div className="form-field">
-                        <label>HP</label>
-                        <input type="number" value={form.HP} onChange={(e) => setForm({...form, HP: +e.target.value})} />
-                    </div>
-                    <div className="form-field">
-                        <label>Attack</label>
-                        <input type="number" value={form.Attack} onChange={(e) => setForm({...form, Attack: +e.target.value})} />
-                    </div>
-                    <div className="form-field">
-                        <label>Defense</label>
-                        <input type="number" value={form.Defense} onChange={(e) => setForm({...form, Defense: +e.target.value})} />
-                    </div>
-                    <div className="form-field">
-                        <label>Sp. Atk</label>
-                        <input type="number" value={form.SpecialAttack} onChange={(e) => setForm({...form, SpecialAttack: +e.target.value})} />
-                    </div>
-                    <div className="form-field">
-                        <label>Sp. Def</label>
-                        <input type="number" value={form.SpecialDefense} onChange={(e) => setForm({...form, SpecialDefense: +e.target.value})} />
-                    </div>
-                    <div className="form-field">
-                        <label>Speed</label>
-                        <input type="number" value={form.Speed} onChange={(e) => setForm({...form, Speed: +e.target.value})} />
-                    </div>
-                    <div className="form-field">
-                        <label>Image (URL or path)</label>
-                        <input placeholder="http://... or C:\..." value={form.image} onChange={(e) => setForm({...form, image: e.target.value})} />
-                    </div>
-                    <button onClick={handleAddPokemon}>Create</button>
                 </div>
             )}
 

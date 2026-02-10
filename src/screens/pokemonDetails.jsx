@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link, useParams, useNavigate } from 'react-router';
+import Toast from '../components/toast/Toast';
+import PokemonMap from '../components/pokemonMap/PokemonMap';
 import './pokemonDetails.css';
 
 const API_URL = "http://localhost:3000";
@@ -14,6 +16,18 @@ const PokemonDetails = () => {
     const [isEditing, setIsEditing] = useState(false);
     const [editForm, setEditForm] = useState(null);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const [toasts, setToasts] = useState([]);
+    const [showMap, setShowMap] = useState(false);
+
+    // Afficher une notification
+    const showToast = (message, type = 'info') => {
+        const id = Date.now();
+        setToasts(prev => [...prev, { id, message, type }]);
+    };
+
+    const removeToast = (id) => {
+        setToasts(prev => prev.filter(t => t.id !== id));
+    };
 
     useEffect(() => {
         fetch(`${API_URL}/pokemons/${id}`)
@@ -65,12 +79,12 @@ const PokemonDetails = () => {
                 const updated = await res.json();
                 setPokemon(updated.pokemon || updated);
                 setIsEditing(false);
-                alert('Pokemon updated!');
+                showToast('Pokémon mis à jour !', 'success');
             } else {
-                alert('Error updating');
+                showToast('Erreur lors de la mise à jour', 'error');
             }
         } catch (err) {
-            alert('Error: ' + err.message);
+            showToast('Erreur: ' + err.message, 'error');
         }
     };
 
@@ -80,10 +94,10 @@ const PokemonDetails = () => {
             if (res.ok) {
                 navigate('/');
             } else {
-                alert('Error deleting Pokemon');
+                showToast('Erreur lors de la suppression', 'error');
             }
         } catch (err) {
-            alert('Error: ' + err.message);
+            showToast('Erreur: ' + err.message, 'error');
         }
     };
 
@@ -105,6 +119,13 @@ const PokemonDetails = () => {
     
     return (
         <div className="pokemon-details-container">
+            {/* Notifications */}
+            <div className="toast-container">
+                {toasts.map(t => (
+                    <Toast key={t.id} message={t.message} type={t.type} onClose={() => removeToast(t.id)} />
+                ))}
+            </div>
+
             <div className="pokemon-details-card">
                 <div className="pokemon-header">
                     {isEditing ? (
@@ -123,14 +144,18 @@ const PokemonDetails = () => {
                             onClick={() => setIsEditing(!isEditing)}
                             title={isEditing ? "Cancel" : "Edit"}
                         >
-                            {isEditing ? '✕' : '✏️'}
+                            {isEditing ? (
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                            ) : (
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17 3a2.85 2.85 0 0 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg>
+                            )}
                         </button>
                         <button 
                             className="delete-button"
                             onClick={() => setShowDeleteModal(true)}
                             title="Delete"
                         >
-                            🗑️
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
                         </button>
                     </div>
                 </div>
@@ -212,13 +237,23 @@ const PokemonDetails = () => {
                     <button className="save-button" onClick={handleSave}>Save</button>
                 )}
 
+                <PokemonMap pokemonId={pokemon?.id} isVisible={showMap} onClose={() => setShowMap(false)} />
+
+                <button className="location-button" onClick={() => setShowMap(true)}>
+                    <svg className="loc-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 1 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                    Location
+                </button>
+
                 <Link to="/" className="back-button">← Back to Pokédex</Link>
             </div>
 
             {showDeleteModal && (
                 <div className="modal-overlay" onClick={() => setShowDeleteModal(false)}>
                     <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-                        <h2 className="modal-title">⚠️ Warning</h2>
+                        <h2 className="modal-title">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                            Warning
+                        </h2>
                         <p className="modal-message">
                             Are you sure you want to delete <strong>{pokemon?.name?.french}</strong>?
                         </p>
