@@ -41,6 +41,9 @@ const PokemonDetails = () => {
                     name: data.name?.french || '',
                     type: data.type?.[0] || 'Normal',
                     image: data.image || '',
+                        // initialiser la position si fournie par l'API
+                        mapX: data.mapX ?? null,
+                        mapY: data.mapY ?? null,
                     HP: data.base?.HP || 50,
                     Attack: data.base?.Attack || 50,
                     Defense: data.base?.Defense || 50,
@@ -65,6 +68,9 @@ const PokemonDetails = () => {
                     name: { french: editForm.name },
                     type: [editForm.type],
                     image: editForm.image,
+                    // inclure la localisation si présente
+                    mapX: editForm.mapX ?? null,
+                    mapY: editForm.mapY ?? null,
                     base: {
                         HP: editForm.HP,
                         Attack: editForm.Attack,
@@ -86,6 +92,13 @@ const PokemonDetails = () => {
         } catch (err) {
             showToast('Erreur: ' + err.message, 'error');
         }
+    };
+
+    // Réception d'une sélection sur la carte (utilisée en mode édition)
+    const handleMapSelect = (x, y) => {
+        setEditForm(prev => ({ ...prev, mapX: x, mapY: y }));
+        setShowMap(false);
+        showToast(`Position sélectionnée : ${x}, ${y}`, 'info');
     };
 
     const handleDelete = async () => {
@@ -237,11 +250,20 @@ const PokemonDetails = () => {
                     <button className="save-button" onClick={handleSave}>Save</button>
                 )}
 
-                <PokemonMap pokemonId={pokemon?.id} isVisible={showMap} onClose={() => setShowMap(false)} />
+                <PokemonMap
+                    pokemonId={pokemon?.id}
+                    isVisible={showMap}
+                    onClose={() => setShowMap(false)}
+                    selectMode={isEditing}
+                    onMapSelect={isEditing ? handleMapSelect : undefined}
+                    selectedPosition={isEditing ? { x: editForm?.mapX, y: editForm?.mapY } : undefined}
+                />
 
                 <button className="location-button" onClick={() => setShowMap(true)}>
                     <svg className="loc-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 1 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                    Location
+                    {isEditing ? (
+                        editForm?.mapX ? `Location: ${editForm.mapX}, ${editForm.mapY}` : 'Select Location'
+                    ) : 'Location'}
                 </button>
 
                 <Link to="/" className="back-button">← Back to Pokédex</Link>

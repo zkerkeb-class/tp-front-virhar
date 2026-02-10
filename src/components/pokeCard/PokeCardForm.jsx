@@ -160,6 +160,7 @@ const PokeCardForm = ({ form, setForm, onSubmit, onCancel }) => {
                         onClose={() => setShowMap(false)}
                         selectMode={true}
                         onMapSelect={handleMapSelect}
+                        selectedPosition={form.mapX != null && form.mapY != null ? { x: form.mapX, y: form.mapY } : null}
                     />
                 )}
         </div>
